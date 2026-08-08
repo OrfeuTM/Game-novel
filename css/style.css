@@ -1,0 +1,86 @@
+/* 
+  1. RESET CSS BÁSICO 
+  Garante que todos os navegadores comecem do zero, 
+  removendo margens indesejadas e padronizando o modelo de caixa.
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Essencial: faz com que bordas e paddings não aumentem o tamanho final dos elementos */
+}
+
+/* 
+  2. ESTILIZAÇÃO DO CORPO DA PÁGINA (BODY)
+  Vamos centralizar o jogo na tela, útil caso a pessoa jogue em um monitor muito grande.
+*/
+body {
+    display: flex; /* Usamos flexbox para alinhar conteúdo facilmente */
+    justify-content: center; /* Centraliza na horizontal */
+    align-items: center; /* Centraliza na vertical */
+    min-height: 100vh; /* Ocupa 100% da altura da tela visível */
+    background-color: #1a1a1a; /* Um fundo escuro em volta do jogo destaca o cenário */
+    font-family: sans-serif; /* Fonte base padrão e limpa */
+}
+
+/* 
+  3. O CONTAINER DO CENÁRIO (A "TEVE")
+  Ele é a nossa âncora. Tudo que for 'absolute' lá dentro, respeitará os limites dele.
+*/
+.cenario-container {
+    position: relative; /* CRUCIAL: Transforma este container na referência para o posicionamento da personagem e texto */
+    width: 100%; /* Ocupa toda a largura disponível... */
+    max-width: 1200px; /* ...mas não passa de 1200px em monitores grandes */
+    aspect-ratio: 16 / 9; /* Mantém a proporção de tela de cinema/monitor (widescreen) independentemente do dispositivo */
+    overflow: hidden; /* Se alguma imagem sair das bordas, ela será cortada/escondida */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra elegante ao redor do jogo */
+}
+
+/* 
+  4. IMAGEM DE FUNDO RESPONSIVA
+*/
+#background-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; /* Força a imagem a preencher todo o container */
+    object-fit: cover; /* A MAGIA AQUI: Garante que a imagem preencha todo o espaço sem nunca ficar espremida ou esticada (ela faz um corte automático se necessário) */
+    z-index: 1; /* Define que o fundo é a primeira camada (a mais de trás) */
+}
+
+/* 
+  5. A PERSONAGEM
+*/
+#personagem {
+    position: absolute; /* Tira do fluxo padrão para sobrepor o fundo */
+    bottom: -5%; /* Desce a personagem um pouquinho abaixo da linha de corte do cenário */
+    left: 10%; /* Posiciona a 10% da borda esquerda. Usar % é melhor que px para responsividade */
+    height: 90%; /* A personagem sempre terá 90% da altura do cenário, adaptando-se a qualquer tela */
+    width: auto; /* Mantém a proporção original do desenho da personagem */
+    z-index: 2; /* Fica acima do fundo (camada 2) */
+}
+
+/* 
+  6. A CAIXA DE DIÁLOGO
+*/
+.texto-dialogo {
+    position: absolute; /* Sobrepõe tudo */
+    bottom: 5%; /* Fica a 5% de distância do fundo da tela */
+    left: 50%; /* Joga o elemento para o meio da tela... */
+    transform: translateX(-50%); /* ...e puxa metade do próprio tamanho para trás, centralizando perfeitamente */
+    
+    width: 90%; /* Em celulares ocupa quase toda a largura */
+    max-width: 800px; /* Mas não cresce infinitamente no PC */
+    
+    background-color: rgba(255, 255, 255, 0.95); /* Fundo branco quase opaco para leitura limpa */
+    border: 3px solid #ccc;
+    border-radius: 12px; /* Bordas arredondadas e modernas */
+    padding: 20px 30px; /* Respiro interno do texto */
+    
+    text-align: center;
+    font-size: clamp(1rem, 2.5vw, 1.4rem); /* Responsividade avançada: O texto encolhe no celular (min 1rem) e cresce no PC (max 1.4rem) de forma fluida */
+    color: #333; /* Cor do texto (cinza escuro é melhor que preto puro) */
+    
+    z-index: 3; /* A camada mais alta, sempre visível acima de tudo */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
